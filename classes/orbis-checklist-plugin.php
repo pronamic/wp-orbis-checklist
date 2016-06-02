@@ -8,6 +8,7 @@ class Orbis_Checklist_Plugin extends Orbis_Plugin {
 		$this->set_db_version( '1.0.0' );
 
 		$this->plugin_include( 'includes/post.php' );
+		$this->plugin_include( 'includes/shortcode.php' );
 	}
 
 	public function loaded() {
