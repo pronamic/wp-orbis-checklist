@@ -117,67 +117,53 @@ function orbis_checklist_shortcode( $atts ) {
 		<input class="btn btn-primary" type="submit" name="genereate" value="Generate" />
 	</form>
 
-	<?php if ( filter_has_var( INPUT_POST, 'genereate' ) ) : ?>
+	<?php 
 
-		<h4>Overview</h4>
+	if ( filter_has_var( INPUT_POST, 'genereate' ) ) {
+		echo '<h4>Overview</h4>';
 
-		<ul>
-			<?php foreach ( $categories as $category ) : ?>
+		echo '<ul>';
+		foreach ( $categories as $category ) {
+			echo '<li>';
+			echo esc_html( $category->name );
+			echo '<ul>';
+			foreach ( $category->checklist_items as $post ) {
+				setup_postdata( $post );
 
-				<li>
-					<?php echo esc_html( $category->name ); ?>
+				$item = array(
+					'description' => '',
+					'checked'     => false,
+				);
 
-					<ul>
-						<?php foreach ( $category->checklist_items as $post ) : ?>
+				if ( isset( $data[ get_the_ID() ] ) ) {
+					$item = $data[ get_the_ID() ];
+				}
 
-							<li>
-								<?php
+				echo '<li>';
+				echo $item['checked'] ? '✓' : '✗';
+				echo ' ';
+				the_title();
 
-								setup_postdata( $post );
+				if ( $item['description'] ) {
+					$description = $item['description' ];
+					$description = wptexturize( $description );
+					$description = convert_chars( $description );
+					$description = make_clickable( $description );
+					$description = force_balance_tags( $description );
+					$description = convert_smilies( $description );
 
-								$item = array(
-									'description' => '',
-									'checked'     => false,
-								);
+					echo '<ul>';
+					echo '<li>', wp_kses_post( $description ), '</li>';
+					echo '</ul>';
+				}
 
-								if ( isset( $data[ get_the_ID() ] ) ) {
-									$item = $data[ get_the_ID() ];
-								}
-
-								echo $item['checked'] ? '☑' : '☐';
-								echo ' ';
-								the_title();
-
-								if ( $item['description'] ) : ?>
-
-									<ul>
-										<li>
-											<?php 
-
-											$description = $item['description' ];
-											$description = wptexturize( $description );
-											$description = convert_chars( $description );
-											$description = make_clickable( $description );
-											$description = force_balance_tags( $description );
-											$description = convert_smilies( $description );
-
-											echo wp_kses_post( $description );
-
-											?>
-										</li>
-									</ul>
-
-								<?php endif; ?>
-							</li>
-
-						<?php endforeach; ?>
-					</ul>
-				</li>
-
-			<?php endforeach; ?>
-		</ul>
-
-	<?php endif;
+				echo '</li>';
+			}
+			echo '</ul>';
+			echo '</li>';
+		}
+		echo '</ul>';
+	}
 
 	$output = ob_get_contents();
 
