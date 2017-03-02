@@ -23,7 +23,6 @@ function orbis_checklist_shortcode( $atts ) {
 	), $atts );
 
 	$categories = get_terms( 'orbis_checklist_category', array(
-		'orderby'    => 'count',
 		'hide_empty' => 0,
 	) );
 
