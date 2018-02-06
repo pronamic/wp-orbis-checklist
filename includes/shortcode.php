@@ -2,8 +2,8 @@
 
 function orbis_checklist_maybe_disable_emoji() {
 	if ( filter_has_var( INPUT_POST, 'genereate' ) ) {
-		remove_action('wp_head', 'print_emoji_detection_script', 7);
-		remove_action('wp_print_styles', 'print_emoji_styles');
+		remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		remove_action( 'wp_print_styles', 'print_emoji_styles' );
 	}
 
 	// @see https://github.com/WordPress/WordPress/blob/4.5.2/wp-includes/default-filters.php#L146-L151
@@ -109,14 +109,17 @@ function orbis_checklist_shortcode( $atts ) {
 					<?php endforeach; ?>
 				</div>
 
-			<?php wp_reset_postdata(); endif; ?>
+			<?php
+				wp_reset_postdata();
+				endif;
+			?>
 
 		<?php endforeach; ?>
 
 		<input class="btn btn-primary" type="submit" name="genereate" value="Generate" />
 	</form>
 
-	<?php 
+	<?php
 
 	if ( filter_has_var( INPUT_POST, 'genereate' ) ) {
 		echo '<h4>Overview</h4>';
@@ -144,7 +147,7 @@ function orbis_checklist_shortcode( $atts ) {
 				the_title();
 
 				if ( $item['description'] ) {
-					$description = $item['description' ];
+					$description = $item['description'];
 					$description = wptexturize( $description );
 					$description = convert_chars( $description );
 					$description = make_clickable( $description );

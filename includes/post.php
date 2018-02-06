@@ -16,7 +16,7 @@ function orbis_checklist_create_initial_post_types() {
 				'edit_item'          => __( 'Edit checklist item', 'orbis_checklist' ),
 				'new_item'           => __( 'New checklist item', 'orbis_checklist' ),
 				'view_item'          => __( 'View checklist item', 'orbis_checklist' ),
-				'search_items'       => __( 'Search checklist items', 'orbis_checklist' ), 
+				'search_items'       => __( 'Search checklist items', 'orbis_checklist' ),
 				'not_found'          => __( 'No checklist ttems found', 'orbis_checklist' ),
 				'not_found_in_trash' => __( 'No checklist ttems found in Trash', 'orbis_checklist' ),
 				'parent_item_colon'  => __( 'Parent checklist items:', 'orbis_checklist' ),
