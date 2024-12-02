@@ -51,73 +51,65 @@ function orbis_checklist_shortcode( $atts ) {
 
 	$data = filter_input( INPUT_POST, 'checklist', FILTER_SANITIZE_STRING, FILTER_FORCE_ARRAY );
 
-	?>
-	<form method="post" action="">
-		<?php foreach ( $categories as $category ) : ?>
+	foreach ( $categories as $category ) : ?>
 
-			<?php if ( ! empty( $category->checklist_items ) ) : ?>
+		<?php if ( ! empty( $category->checklist_items ) ) : ?>
 
-				<h4><?php echo esc_html( $category->name ); ?></h4>
+			<h4><?php echo esc_html( $category->name ); ?></h4>
 
-				<div class="panel-group" id="<?php echo esc_attr( $category->slug ); ?>" role="tablist" aria-multiselectable="true">
+			<div class="accordion mb-4" id="<?php echo esc_attr( $category->slug ); ?>">
 
-					<?php foreach ( $category->checklist_items as $post ) : ?>
+				<?php foreach ( $category->checklist_items as $post ) : ?>
 
-						<div class="panel panel-default">
-							<?php
+					<div class="accordion-item">
+						<?php
 
-							setup_postdata( $post );
+						setup_postdata( $post );
 
-							$name = sprintf(
-								'checklist[%s]',
-								get_the_ID()
-							);
+						$name = sprintf(
+							'checklist[%s]',
+							get_the_ID()
+						);
 
-							$item = array(
-								'description' => '',
-								'checked'     => false,
-							);
+						$item = array(
+							'description' => '',
+							'checked'     => false,
+						);
 
-							if ( isset( $data[ get_the_ID() ] ) ) {
-								$item = $data[ get_the_ID() ];
-							}
+						if ( isset( $data[ get_the_ID() ] ) ) {
+							$item = $data[ get_the_ID() ];
+						}
 
-							?>
-							<div class="panel-heading" role="tab" id="heading-<?php the_ID(); ?>">
-								<input type="checkbox" name="<?php echo esc_attr( $name . '[checked]' ); ?>" value="1" <?php checked( $item['checked'] ); ?> />
+						$id = 'collapse-' . get_the_ID();
 
-								<a class="collapsed" class="collapse" role="button" data-toggle="collapse" data-parent="#<?php echo esc_attr( $category->slug ); ?>" href="#collapse-<?php the_ID(); ?>" aria-expanded="true" aria-controls="collapse-<?php the_ID(); ?>">
-									<?php the_title(); ?>
-								</a>
-							</div>
+						?>
+						<h5 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<?php echo \esc_attr( $id ); ?>" aria-expanded="false" aria-controls="<?php echo \esc_attr( $id ); ?>">
+								<?php the_title(); ?>
+							</button>
+						</h5>
 
-							<div id="collapse-<?php the_ID(); ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php the_ID(); ?>">
-								<div class="panel-body">
-									<?php the_content(); ?>
+						<div id="<?php echo \esc_attr( $id ); ?>" class="accordion-collapse collapse" data-bs-parent="#<?php echo esc_attr( $category->slug ); ?>">
+							 <div class="accordion-body">
+								<?php the_content(); ?>
 
-									<p>
-										<small><a href="<?php the_permalink(); ?>"><?php the_permalink(); ?></a></small>
-									</p>
-
-									<p>
-										<textarea name="<?php echo esc_attr( $name . '[description]' ); ?>"><?php echo esc_textarea( $item['description'] ); ?></textarea>
-									</p>
-								</div>
+								<p>
+									<small><a href="<?php the_permalink(); ?>"><?php the_permalink(); ?></a></small>
+								</p>
 							</div>
 						</div>
+					</div>
 
-					<?php endforeach; ?>
-				</div>
+				<?php endforeach; ?>
 
-			<?php
-				wp_reset_postdata();
-				endif;
-			?>
+			</div>
 
-		<?php endforeach; ?>
+		<?php
+			wp_reset_postdata();
+			endif;
+		?>
 
-		<input class="btn btn-primary" type="submit" name="genereate" value="Generate" />
-	</form>
+	<?php endforeach; ?>
 
 	<?php
 
