@@ -51,11 +51,42 @@ function orbis_checklist_shortcode( $atts ) {
 
 	$data = filter_input( INPUT_POST, 'checklist', FILTER_SANITIZE_STRING, FILTER_FORCE_ARRAY );
 
-	foreach ( $categories as $category ) : ?>
+	?>
+	<div class="mb-4">
+		<h2><?php esc_html_e( 'GitHub', 'orbis-checklist' ); ?></h2>
+
+		<p>
+			<?php \esc_html_e( 'Copy this markdown to a new GitHub issue and check off the to-do’s there.', 'orbis-checklist' ); ?>
+		</p>
+
+		<?php
+
+		$github_md = '';
+
+		foreach ( $categories as $category ) {
+			$github_md .= '## ' . $category->name . "\r\n";
+			$github_md .= "\r\n";
+
+			foreach ( $category->checklist_items as $post ) {
+				setup_postdata( $post );
+
+				$github_md .= '- [ ] ' . \html_entity_decode( \get_the_title( $post ) ) . "\r\n";
+				$github_md .= '  ' . \get_permalink( $post ) . "\r\n";
+			}
+
+			$github_md .= "\r\n";
+		}
+
+		printf( '<textarea cols="60" rows="10">%s</textarea>', \esc_textarea( $github_md ) );
+
+		?>
+	</div>
+
+	<?php foreach ( $categories as $category ) : ?>
 
 		<?php if ( ! empty( $category->checklist_items ) ) : ?>
 
-			<h4><?php echo esc_html( $category->name ); ?></h4>
+			<h2><?php echo esc_html( $category->name ); ?></h2>
 
 			<div class="accordion mb-4" id="<?php echo esc_attr( $category->slug ); ?>">
 
