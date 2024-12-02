@@ -144,52 +144,6 @@ function orbis_checklist_shortcode( $atts ) {
 
 	<?php
 
-	if ( filter_has_var( INPUT_POST, 'genereate' ) ) {
-		echo '<h4>Overview</h4>';
-
-		echo '<ul>';
-		foreach ( $categories as $category ) {
-			echo '<li>';
-			echo esc_html( $category->name );
-			echo '<ul>';
-			foreach ( $category->checklist_items as $post ) {
-				setup_postdata( $post );
-
-				$item = array(
-					'description' => '',
-					'checked'     => false,
-				);
-
-				if ( isset( $data[ get_the_ID() ] ) ) {
-					$item = $data[ get_the_ID() ];
-				}
-
-				echo '<li>';
-				echo $item['checked'] ? '✓' : '✗';
-				echo ' ';
-				the_title();
-
-				if ( $item['description'] ) {
-					$description = $item['description'];
-					$description = wptexturize( $description );
-					$description = convert_chars( $description );
-					$description = make_clickable( $description );
-					$description = force_balance_tags( $description );
-					$description = convert_smilies( $description );
-
-					echo '<ul>';
-					echo '<li>', wp_kses_post( $description ), '</li>';
-					echo '</ul>';
-				}
-
-				echo '</li>';
-			}
-			echo '</ul>';
-			echo '</li>';
-		}
-		echo '</ul>';
-	}
-
 	$output = ob_get_contents();
 
 	ob_end_clean();
