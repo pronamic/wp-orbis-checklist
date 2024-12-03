@@ -20,10 +20,12 @@ function orbis_checklist_shortcode( $atts ) {
 	$atts = shortcode_atts( array(
 		'number' => 50,
 		'cols'   => 3,
+		'parent' => '',
 	), $atts );
 
 	$categories = get_terms( 'orbis_checklist_category', array(
 		'hide_empty' => 0,
+		'parent'     => $atts['parent'],
 	) );
 
 	if ( ! is_array( $categories ) ) {
