@@ -29,6 +29,8 @@ function orbis_checklist_create_initial_post_types() {
 				'title',
 				'editor',
 				'author',
+				'comments',
+				'revisions',
 			],
 			'has_archive'   => true,
 			'rewrite'       => [
