@@ -25,7 +25,11 @@ function orbis_checklist_create_initial_post_types() {
 			'public'        => true,
 			'menu_position' => 30,
 			'menu_icon'     => 'dashicons-yes',
-			'supports'      => [ 'title', 'editor', 'author' ],
+			'supports'      => [
+				'title',
+				'editor',
+				'author',
+			],
 			'has_archive'   => true,
 			'rewrite'       => [
 				'slug' => _x( 'checklist-items', 'slug', 'orbis_checklist' ),
