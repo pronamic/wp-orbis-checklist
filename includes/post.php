@@ -6,9 +6,9 @@
 function orbis_checklist_create_initial_post_types() {
 	register_post_type(
 		'orbis_checklist_item',
-		array(
+		[
 			'label'         => __( 'Checklist', 'orbis_checklist' ),
-			'labels'        => array(
+			'labels'        => [
 				'name'               => _x( 'Checklist items', 'post type general name', 'orbis_checklist' ),
 				'singular_name'      => _x( 'Checklist item', 'post type singular name', 'orbis_checklist' ),
 				'add_new'            => _x( 'Add new', 'checklist item', 'orbis_checklist' ),
@@ -21,24 +21,24 @@ function orbis_checklist_create_initial_post_types() {
 				'not_found_in_trash' => __( 'No checklist ttems found in Trash', 'orbis_checklist' ),
 				'parent_item_colon'  => __( 'Parent checklist items:', 'orbis_checklist' ),
 				'menu_name'          => __( 'Checklist', 'orbis_checklist' ),
-			),
+			],
 			'public'        => true,
 			'menu_position' => 30,
 			'menu_icon'     => 'dashicons-yes',
-			'supports'      => array( 'title', 'editor', 'author' ),
+			'supports'      => [ 'title', 'editor', 'author' ],
 			'has_archive'   => true,
-			'rewrite'       => array(
+			'rewrite'       => [
 				'slug' => _x( 'checklist-items', 'slug', 'orbis_checklist' ),
-			),
-		)
+			],
+		]
 	);
 
 	register_taxonomy(
 		'orbis_checklist_category',
 		'orbis_checklist_item',
-		array(
+		[
 			'hierarchical' => true,
-			'labels'       => array(
+			'labels'       => [
 				'name'              => _x( 'Checklist categories', 'class general name', 'orbis_checklist' ),
 				'singular_name'     => _x( 'Checklist category', 'class singular name', 'orbis_checklist' ),
 				'search_items'      => __( 'Search checklist categories', 'orbis_checklist' ),
@@ -50,11 +50,11 @@ function orbis_checklist_create_initial_post_types() {
 				'add_new_item'      => __( 'Add new checklist category', 'orbis_checklist' ),
 				'new_item_name'     => __( 'New checklist category name', 'orbis_checklist' ),
 				'menu_name'         => __( 'Checklist categories', 'orbis_checklist' ),
-			),
+			],
 			'show_ui'      => true,
 			'query_var'    => true,
-			'rewrite'      => array( 'slug' => __( 'checklist-categories', 'orbis_checklist' ) ),
-		)
+			'rewrite'      => [ 'slug' => __( 'checklist-categories', 'orbis_checklist' ) ],
+		]
 	);
 }
 

@@ -17,34 +17,42 @@ add_action( 'init', 'orbis_checklist_maybe_disable_emoji' );
 function orbis_checklist_shortcode( $atts ) {
 	global $post;
 
-	$atts = shortcode_atts( array(
-		'number' => 50,
-		'cols'   => 3,
-		'parent' => '',
-	), $atts );
+	$atts = shortcode_atts(
+		[
+			'number' => 50,
+			'cols'   => 3,
+			'parent' => '',
+		],
+		$atts 
+	);
 
-	$categories = get_terms( 'orbis_checklist_category', array(
-		'hide_empty' => 0,
-		'parent'     => $atts['parent'],
-	) );
+	$categories = get_terms(
+		'orbis_checklist_category',
+		[
+			'hide_empty' => 0,
+			'parent'     => $atts['parent'],
+		] 
+	);
 
 	if ( ! is_array( $categories ) ) {
 		return;
 	}
 
 	foreach ( $categories as $category ) {
-		$query = new WP_Query( array(
-			'post_type'      => 'orbis_checklist_item',
-			'posts_per_page' => -1,
-			'no_found_rows'  => true,
-			'tax_query' => array(
-				array(
-					'taxonomy' => 'orbis_checklist_category',
-					'field'    => 'term_id',
-					'terms'    => $category->term_id,
-				),
-			),
-		) );
+		$query = new WP_Query(
+			[
+				'post_type'      => 'orbis_checklist_item',
+				'posts_per_page' => -1,
+				'no_found_rows'  => true,
+				'tax_query'      => [
+					[
+						'taxonomy' => 'orbis_checklist_category',
+						'field'    => 'term_id',
+						'terms'    => $category->term_id,
+					],
+				],
+			] 
+		);
 
 		$category->checklist_items = $query->posts;
 	}
@@ -104,10 +112,10 @@ function orbis_checklist_shortcode( $atts ) {
 							get_the_ID()
 						);
 
-						$item = array(
+						$item = [
 							'description' => '',
 							'checked'     => false,
-						);
+						];
 
 						if ( isset( $data[ get_the_ID() ] ) ) {
 							$item = $data[ get_the_ID() ];
@@ -123,7 +131,7 @@ function orbis_checklist_shortcode( $atts ) {
 						</h5>
 
 						<div id="<?php echo \esc_attr( $id ); ?>" class="accordion-collapse collapse" data-bs-parent="#<?php echo esc_attr( $category->slug ); ?>">
-							 <div class="accordion-body">
+							<div class="accordion-body">
 								<?php the_content(); ?>
 
 								<p>
@@ -137,7 +145,7 @@ function orbis_checklist_shortcode( $atts ) {
 
 			</div>
 
-		<?php
+			<?php
 			wp_reset_postdata();
 			endif;
 		?>
